@@ -9,9 +9,8 @@ html, body {
   height: 100%;
   width: 100%;
   font-family: var(--font-main);
-  /* background-color: #0e0eaa; */
   background-color: #ffffff;
-  color: #ffffff;
+  color: #1e1e1e;
   overflow-x: hidden;
 }
 
@@ -28,12 +27,12 @@ html, body {
 
   /* Colors */
   --color-primary: #00bcd4;
-  --color-primary-dark: #00acc1;
+  --color-primary-dark: #0097a7;
   --color-success: #2e7d32;
   --color-success-bg: #e0fff4;
   --color-danger: #c62828;
   --color-danger-bg: #ffe5e5;
-  --color-info-bg: #111114;
+  --color-info-bg: #f7f9fb;
 
   /* Chart */
   --chart-age: #7b2cbf;
@@ -45,48 +44,58 @@ html, body {
 }
 
 /* =================== NAVBAR =================== */
-.navbar {
-  position: sticky;
+.healthcare-navbar {
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 999;
-  background-color: #111114;
-  height: 8rem;
+  background: linear-gradient(to right, #0097a7, #80deea);
+  height: 6rem;
   display: flex;
   align-items: center;
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  padding: 0 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-bottom: 3px solid #006064;
+}
+
+.logo-container {
+  background-color: #ffffff;
+  border-radius: 50%;
+  padding: 0.5rem;
+  margin-right: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 188, 212, 0.3);
 }
 
 .logo {
-  height: 40px;
-  margin-right: 1rem;
-  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.4));
+  height: 42px;
+  display: block;
 }
 
 .title {
-  font-size: 1.5rem;
-  color: #f0f0f0;
-  font-weight: 600;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ffffff;
+  font-family: var(--font-main);
+  letter-spacing: 0.5px;
 }
 
 /* =================== SHARED CONTAINER =================== */
 .analysis-container {
-  max-width: var(--max-container-width);
-  width: 75%;
-  margin: 1px auto;
-  padding: 2.5rem 3rem;
+  max-width: var(--container-max-width);
+  width: var(--container-width);
+  margin: 7rem auto 2rem; /* space for navbar */
+  padding: var(--container-padding);
   border-radius: var(--container-radius);
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--container-shadow);
   text-align: center;
-  font-family: var(--font-main);
   background-color: var(--color-info-bg);
   transition: all 0.3s ease;
-  color: #333;
-  max-height: none; /* ✅ REMOVE the max-height that was limiting it */
-  overflow: visible;
-  color: #ffffff;
+  color: #1e1e1e;
+  position: relative;
 }
 
+/* =================== FORM =================== */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -94,23 +103,29 @@ html, body {
   margin-top: 2rem;
 }
 
-
 label {
   display: flex;
   flex-direction: column;
   font-size: 0.95rem;
-  color: #ffffff;
+  color: #333;
   font-weight: bold;
 }
 
 input,
 select {
   margin-top: 0.5rem;
-  padding: 0.5rem;
-  background-color: #2a2a2a;
-  color: #e0f7fa;
-  border: 1px solid #00bcd4;
+  padding: 0.6rem 0.8rem;
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #cfd8dc;
   border-radius: 6px;
+  transition: border 0.3s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-primary);
 }
 
 input::placeholder {
@@ -127,9 +142,9 @@ input::placeholder {
   border-radius: 8px;
   cursor: pointer;
   background-color: var(--color-primary);
-  color: #1e1e1e;
+  color: white;
   margin-top: 1rem;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .predict-button:hover,
@@ -137,15 +152,65 @@ input::placeholder {
   background-color: var(--color-primary-dark);
 }
 
+.predict-button {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
 .back-btn {
   margin-top: 2rem;
-  color: white;
+}
+
+/* =================== SPINNER OVERLAY =================== */
+.spinner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: var(--container-radius);
+}
+
+.blur {
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+/* =================== HEARTBEAT SPINNER =================== */
+.heartbeat-spinner {
+  font-size: 4rem;
+  text-align: center;
+  animation: heartbeat 1.2s infinite;
+  display: inline-block;
+  color: crimson;
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.3);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.3);
+  }
+  70% {
+    transform: scale(1);
+  }
 }
 
 /* =================== RESULT BOX =================== */
 .result-box.safe {
   background-color: #0e0eaa;
-  /* background-color: #004d40; */
   color: #a7ffeb;
   border-left: 6px solid #22c55e;
 }
@@ -274,74 +339,5 @@ input::placeholder {
 
   .logo {
     height: 32px;
-  }
-}
-
-form.form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-/* Full-width button below all fields */
-button.predict-button {
-  grid-column: 1 / -1; /* Span all columns */
-  width: 100%;
-  padding: 1rem;
-  font-size: 1rem;
-  background-color: var(--color-primary);
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 1rem;
-}
-
-button.predict-button:hover {
-  background-color: var(--color-primary-dark);
-}
-.heartbeat-spinner {
-  font-size: 3rem;
-  animation: heartbeat 1.2s infinite;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-@keyframes heartbeat {
-  0% { transform: scale(1); }
-  14% { transform: scale(1.3); }
-  28% { transform: scale(1); }
-  42% { transform: scale(1.3); }
-  70% { transform: scale(1); }
-}
-
-/* HeartbeatSpinner.css */
-.heartbeat-spinner {
-  font-size: 3rem;
-  text-align: center;
-  margin-top: 1.5rem;
-  animation: heartbeat 1.2s infinite;
-  display: inline-block;
-  color: crimson;
-}
-
-@keyframes heartbeat {
-  0%, 100% {
-    transform: scale(1);
-  }
-  14% {
-    transform: scale(1.3);
-  }
-  28% {
-    transform: scale(1);
-  }
-  42% {
-    transform: scale(1.3);
-  }
-  70% {
-    transform: scale(1);
   }
 }
