@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  background-color: #121417;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.main-content {
+  margin-top: 80px; /* leave space under the navbar */
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,347 @@
+/* =================== RESET =================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-main);
+  /* background-color: #0e0eaa; */
+  background-color: #ffffff;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* =================== VARIABLES =================== */
+:root {
+  --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* Layout */
+  --container-width: 75%;
+  --container-max-width: 900px;
+  --container-radius: 20px;
+  --container-padding: 2.5rem 3rem;
+  --container-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+
+  /* Colors */
+  --color-primary: #00bcd4;
+  --color-primary-dark: #00acc1;
+  --color-success: #2e7d32;
+  --color-success-bg: #e0fff4;
+  --color-danger: #c62828;
+  --color-danger-bg: #ffe5e5;
+  --color-info-bg: #111114;
+
+  /* Chart */
+  --chart-age: #7b2cbf;
+  --chart-bp: #3f37c9;
+  --chart-chol: #ff6b6b;
+  --chart-bs: #f59e0b;
+  --chart-oldpeak: #10b981;
+  --chart-angina: #ef4444;
+}
+
+/* =================== NAVBAR =================== */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: #111114;
+  height: 8rem;
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+  height: 40px;
+  margin-right: 1rem;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.4));
+}
+
+.title {
+  font-size: 1.5rem;
+  color: #f0f0f0;
+  font-weight: 600;
+}
+
+/* =================== SHARED CONTAINER =================== */
+.analysis-container {
+  max-width: var(--max-container-width);
+  width: 75%;
+  margin: 1px auto;
+  padding: 2.5rem 3rem;
+  border-radius: var(--container-radius);
+  box-shadow: var(--box-shadow);
+  text-align: center;
+  font-family: var(--font-main);
+  background-color: var(--color-info-bg);
+  transition: all 0.3s ease;
+  color: #333;
+  max-height: none; /* ✅ REMOVE the max-height that was limiting it */
+  overflow: visible;
+  color: #ffffff;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.95rem;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+input,
+select {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #2a2a2a;
+  color: #e0f7fa;
+  border: 1px solid #00bcd4;
+  border-radius: 6px;
+}
+
+input::placeholder {
+  color: #888;
+}
+
+/* =================== BUTTONS =================== */
+.predict-button,
+.back-btn {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: var(--color-primary);
+  color: #1e1e1e;
+  margin-top: 1rem;
+  transition: background 0.3s ease;
+}
+
+.predict-button:hover,
+.back-btn:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.back-btn {
+  margin-top: 2rem;
+  color: white;
+}
+
+/* =================== RESULT BOX =================== */
+.result-box.safe {
+  background-color: #0e0eaa;
+  /* background-color: #004d40; */
+  color: #a7ffeb;
+  border-left: 6px solid #22c55e;
+}
+
+.result-box.risk {
+  background-color: #b71c1c;
+  color: #ffebee;
+  border-left: 6px solid #dc2626;
+}
+
+/* =================== ANALYSIS PAGE =================== */
+.analysis-container.risk {
+  background: linear-gradient(145deg, var(--color-danger-bg), #ffd4d4);
+  color: var(--color-danger);
+}
+
+.analysis-container.safe {
+  background: linear-gradient(145deg, var(--color-success-bg), #ccf5ea);
+  color: var(--color-success);
+}
+
+.meta-info {
+  margin: 1.5rem 0;
+  font-size: 1.05rem;
+}
+
+.confidence {
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+/* =================== CHARTS =================== */
+.chart-wrapper {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  margin-top: 2rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.analysis-container.risk .chart-wrapper {
+  background: linear-gradient(135deg, #fff5f5, #fbeaea);
+}
+
+.analysis-container.safe .chart-wrapper {
+  background: linear-gradient(135deg, #f0fffa, #e9fff5);
+}
+
+.recharts-tooltip-wrapper {
+  font-size: 0.9rem;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: #333;
+  font-size: 13px;
+}
+
+.recharts-line {
+  stroke-width: 3;
+}
+
+.recharts-dot {
+  stroke: var(--color-danger);
+  stroke-width: 2;
+  fill: #fff;
+}
+
+/* =================== ADVICE BOX =================== */
+.advice-box {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background-color: #fdfdfd;
+  color: #333;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+}
+
+.analysis-container.risk .advice-box {
+  background-color: #fff4f4;
+  color: #7f1d1d;
+}
+
+.analysis-container.safe .advice-box {
+  background-color: #f1fff9;
+  color: #065f46;
+}
+
+.advice-box h3 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.advice-box ul {
+  padding-left: 1.2rem;
+}
+
+.advice-box li {
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+/* =================== NO RESULT =================== */
+.no-result {
+  padding: 3rem;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+/* =================== RESPONSIVENESS =================== */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
+
+  .predict-button {
+    grid-column: span 1;
+    width: 100%;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .logo {
+    height: 32px;
+  }
+}
+
+form.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Full-width button below all fields */
+button.predict-button {
+  grid-column: 1 / -1; /* Span all columns */
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: var(--color-primary);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+button.predict-button:hover {
+  background-color: var(--color-primary-dark);
+}
+.heartbeat-spinner {
+  font-size: 3rem;
+  animation: heartbeat 1.2s infinite;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.3); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.3); }
+  70% { transform: scale(1); }
+}
+
+/* HeartbeatSpinner.css */
+.heartbeat-spinner {
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 1.5rem;
+  animation: heartbeat 1.2s infinite;
+  display: inline-block;
+  color: crimson;
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.3);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.3);
+  }
+  70% {
+    transform: scale(1);
+  }
+}

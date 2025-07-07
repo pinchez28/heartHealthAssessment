@@ -1,0 +1,36 @@
+# === Root ===
+*.log
+.env
+.DS_Store
+*.pyc
+__pycache__/
+
+# === Node.js/React (client folder) ===
+client/node_modules/
+client/build/
+client/.env
+client/.DS_Store
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+client/.next/
+client/.parcel-cache/
+client/.cache/
+
+# === Python/Flask (server folder) ===
+server/__pycache__/
+server/*.py[cod]
+server/env/
+server/venv/
+server/.env
+server/.DS_Store
+server/*.log
+
+# === IDE/editor config ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# === OS files ===
+Thumbs.db
